@@ -30,11 +30,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload dist as artifact
+      - name: Upload web as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-dist
-          path: dist
+          name: frontend-web
+          path: web
 
   release:
     runs-on: ubuntu-latest
@@ -42,16 +42,16 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
-      - name: Download dist artifact
+      - name: Download web artifact
         uses: actions/download-artifact@v4
         with:
-          name: frontend-dist
-          path: dist
+          name: frontend-web
+          path: web
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/**
+          files: web/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
