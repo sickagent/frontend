@@ -56,8 +56,9 @@ export function AppShell() {
 
   const sidebarContent = (
     <>
-      <div className="p-5 pb-3">
+      <div className="p-5 pb-4 space-y-3">
         <Logo showSlogan />
+        <ThemeToggle expand />
       </div>
 
       <nav className="flex-1 px-3 space-y-1">
@@ -66,7 +67,7 @@ export function AppShell() {
         ))}
       </nav>
 
-      {/* Footer links + theme toggle */}
+      {/* Footer links */}
       <div className="px-4 mx-3 mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
         <Link to="/docs" className="flex items-center gap-1 text-[11px] text-fg-dimmed hover:text-fg-muted transition-colors">
           <BookOpen className="w-3 h-3" /> Docs
@@ -77,26 +78,28 @@ export function AppShell() {
         <Link to="/policy" className="flex items-center gap-1 text-[11px] text-fg-dimmed hover:text-fg-muted transition-colors">
           <Shield className="w-3 h-3" /> Privacy
         </Link>
-        <div className="ml-auto">
-          <ThemeToggle />
-        </div>
       </div>
 
-      <div className="p-4 mx-3 mb-3 rounded-xl bg-surface-2 border border-border/50">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sick-500 to-violet-500 flex items-center justify-center text-xs font-bold text-white">
+      {/* User card → profile */}
+      <div className="px-4 mx-3 mb-3 py-3 rounded-xl bg-surface-2 border border-border/50 flex items-center gap-3">
+        <Link
+          to="/app/profile"
+          onClick={() => setMobileOpen(false)}
+          className="flex items-center gap-3 flex-1 min-w-0 group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sick-500 to-violet-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
             {(user?.name || user?.email || '?')[0].toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-fg-secondary truncate">
+            <p className="text-sm font-medium text-fg-secondary truncate group-hover:text-fg transition-colors">
               {user?.name || 'User'}
             </p>
             <p className="text-xs text-fg-muted truncate">{user?.email}</p>
           </div>
-          <IconButton onClick={logout} title="Log out" variant="muted">
-            <LogOut className="w-4 h-4" />
-          </IconButton>
-        </div>
+        </Link>
+        <IconButton onClick={logout} title="Log out" variant="muted">
+          <LogOut className="w-4 h-4" />
+        </IconButton>
       </div>
     </>
   );
@@ -146,6 +149,9 @@ export function AppShell() {
             <Menu className="w-5 h-5" />
           </IconButton>
           <Logo />
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
         </header>
 
         <div className="flex-1 overflow-y-auto">

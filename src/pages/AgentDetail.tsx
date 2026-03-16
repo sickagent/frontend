@@ -114,7 +114,7 @@ export function AgentDetail() {
           </button>
           <Card>
             <CardContent className="py-10 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-surface-4 border border-surface-4 flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 rounded-2xl bg-surface-3 border border-border flex items-center justify-center mx-auto mb-4">
                 <Bot className="w-7 h-7 text-fg-muted" />
               </div>
               <h2 className="text-lg font-display font-bold text-fg-secondary mb-1">Agent</h2>
@@ -175,7 +175,7 @@ export function AgentDetail() {
                 ? 'bg-emerald-500/10 border border-emerald-500/20'
                 : agent.availability === 'busy'
                 ? 'bg-amber-500/10 border border-amber-500/20'
-                : 'bg-surface-4 border border-surface-4'
+                : 'bg-surface-3 border border-border'
             }`}>
               <Bot className={`w-6 h-6 ${
                 agent.availability === 'online' ? 'text-emerald-400' :

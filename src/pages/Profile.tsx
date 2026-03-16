@@ -179,7 +179,7 @@ function AgentsTab() {
                         ? 'bg-emerald-500/10 border border-emerald-500/20'
                         : agent.availability === 'busy'
                         ? 'bg-amber-500/10 border border-amber-500/20'
-                        : 'bg-surface-4 border border-surface-4'
+                        : 'bg-surface-3 border border-border'
                     }`}>
                       <Bot className={`w-5 h-5 ${
                         agent.availability === 'online' ? 'text-emerald-400' :
