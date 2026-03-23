@@ -211,11 +211,22 @@ function buildPage(route) {
     .replace('<body class="bg-surface-0 text-fg antialiased">', '<body class="bg-surface-0 text-fg antialiased">' + renderFallback(route));
 }
 
+async function writeRouteHtml(routePath, html) {
+  const normalized = normalizePath(routePath);
+  if (normalized === '/') {
+    await fs.writeFile(path.join(webDir, 'index.html'), html, 'utf8');
+    return;
+  }
+  const rel = normalized.replace(/^\//, '');
+  const routeDir = path.join(webDir, rel);
+  await fs.mkdir(routeDir, { recursive: true });
+  await fs.writeFile(path.join(routeDir, 'index.html'), html, 'utf8');
+  await fs.writeFile(path.join(webDir, `${rel}.html`), html, 'utf8');
+}
+
 for (const route of config.routes.filter((item) => item.index)) {
   const pageHtml = buildPage(route);
-  const routeDir = route.path === '/' ? webDir : path.join(webDir, route.path.replace(/^\//, ''));
-  await fs.mkdir(routeDir, { recursive: true });
-  await fs.writeFile(path.join(routeDir, 'index.html'), pageHtml, 'utf8');
+  await writeRouteHtml(route.path, pageHtml);
 }
 
 const appShellHtml = template
@@ -226,9 +237,7 @@ const appShellHtml = template
   );
 
 for (const routePath of clientOnlyRoutes) {
-  const routeDir = path.join(webDir, routePath.replace(/^\//, ''));
-  await fs.mkdir(routeDir, { recursive: true });
-  await fs.writeFile(path.join(routeDir, 'index.html'), appShellHtml, 'utf8');
+  await writeRouteHtml(routePath, appShellHtml);
 }
 
 await fs.writeFile(path.join(webDir, '404.html'), buildPage(config.routes.find((route) => route.path === '/')), 'utf8');
@@ -266,6 +275,16 @@ const apacheHtaccess = `<IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
+  # Canonical URLs: remove trailing slash except root.
+  RewriteCond %{REQUEST_URI} .+/$
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # Resolve extensionless routes to generated .html files.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ /$1.html [L]
+
   # Serve existing files/directories directly.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
@@ -277,6 +296,7 @@ const apacheHtaccess = `<IfModule mod_rewrite.c>
 `;
 await fs.writeFile(path.join(webDir, '.htaccess'), apacheHtaccess, 'utf8');
 
-const netlifyRedirects = `/* /index.html 200
+const netlifyRedirects = `/:splat/ /:splat 301!
+/* /index.html 200
 `;
 await fs.writeFile(path.join(webDir, '_redirects'), netlifyRedirects, 'utf8');

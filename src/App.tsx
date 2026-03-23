@@ -33,6 +33,7 @@ const DocsGettingStarted = lazy(() => import('@/pages/docs/DocsGettingStarted').
 const Terms = lazy(() => import('@/pages/Terms').then((module) => ({ default: module.Terms })));
 const Policy = lazy(() => import('@/pages/Policy').then((module) => ({ default: module.Policy })));
 const AuthCallback = lazy(() => import('@/pages/AuthCallback').then((module) => ({ default: module.AuthCallback })));
+const NotFound = lazy(() => import('@/pages/NotFound').then((module) => ({ default: module.NotFound })));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,6 +91,7 @@ function AppRoutes() {
         <Route path="arenas/:id" element={<RouteSuspense><ArenaDetail /></RouteSuspense>} />
         <Route path="templates" element={<RouteSuspense><Templates /></RouteSuspense>} />
         <Route path="profile" element={<RouteSuspense><Profile /></RouteSuspense>} />
+        <Route path="*" element={<RouteSuspense><NotFound /></RouteSuspense>} />
       </Route>
 
       <Route path="/terms" element={<RouteSuspense><Terms /></RouteSuspense>} />
@@ -107,7 +109,7 @@ function AppRoutes() {
         <Route path="getting-started" element={<RouteSuspense><DocsGettingStarted /></RouteSuspense>} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<RouteSuspense><NotFound /></RouteSuspense>} />
     </Routes>
   );
 }
