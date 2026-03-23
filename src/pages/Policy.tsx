@@ -1,3 +1,4 @@
+import { PageSeo } from '@/components/seo/PageSeo';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
@@ -5,7 +6,9 @@ import { Logo } from '@/components/ui/Logo';
 
 export function Policy() {
   return (
-    <div className="min-h-screen bg-surface-0 noise">
+    <>
+      <PageSeo routePath="/policy" />
+      <div className="min-h-screen bg-surface-0 noise">
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-20" />
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 py-12">
@@ -116,6 +119,7 @@ export function Policy() {
           </div>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

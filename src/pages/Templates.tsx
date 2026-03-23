@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { PageSpinner } from '@/components/ui/Spinner';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { listTemplates, createTemplate, deleteTemplate } from '@/api/templates';
 import type { TeamTemplate, TeamTemplateStep } from '@/api/types';
 
@@ -148,22 +149,15 @@ export function Templates() {
   if (isLoading) return <PageSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-6"
-      >
-        <div>
-          <h1 className="text-2xl font-display font-bold text-fg">Templates</h1>
-          <p className="text-sm text-fg-muted mt-1">
-            {templates.length} team template{templates.length !== 1 ? 's' : ''}
-          </p>
-        </div>
+    <AdminPage
+      title="Templates"
+      description={`${templates.length} team template${templates.length !== 1 ? 's' : ''}`}
+      actions={
         <Button onClick={() => setCreateOpen(true)}>
           <Plus className="w-4 h-4" /> New template
         </Button>
-      </motion.div>
+      }
+    >
 
       {templates.length === 0 ? (
         <EmptyState
@@ -328,6 +322,6 @@ export function Templates() {
           </div>
         </form>
       </Modal>
-    </div>
+    </AdminPage>
   );
 }

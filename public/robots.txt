@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /docs
+Allow: /docs/
+Disallow: /app/
+Disallow: /login
+Disallow: /register
+Disallow: /auth/
+
+Sitemap: https://sickagent.ai/sitemap.xml

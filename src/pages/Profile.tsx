@@ -13,6 +13,7 @@ import { PageSpinner } from '@/components/ui/Spinner';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { CopyButton } from '@/components/ui/CopyButton';
 import { Tabs, type TabItem } from '@/components/ui/Tabs';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { useAuth } from '@/hooks/useAuth';
 import { updateMe, issueApiKey } from '@/api/auth';
 import { listAgents } from '@/api/agents';
@@ -57,15 +58,15 @@ function ProfileTab() {
       {/* Avatar + info */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
         <Card>
-          <CardContent className="flex items-center gap-5 py-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sick-500 to-violet-500 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-sick-500/20">
+          <CardContent className="flex items-center gap-4 sm:gap-5 py-6">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-2xl bg-gradient-to-br from-sick-500 to-violet-500 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-sick-500/20">
               {(user?.name || user?.email || '?')[0].toUpperCase()}
             </div>
-            <div className="flex-1">
-              <h2 className="text-lg font-semibold text-fg">{user?.name || 'Unnamed'}</h2>
-              <p className="text-sm text-fg-muted">{user?.email}</p>
-              <div className="flex items-center gap-1 mt-1">
-                <p className="text-xs text-fg-dimmed font-mono">ID: {user?.id}</p>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg font-semibold text-fg truncate">{user?.name || 'Unnamed'}</h2>
+              <p className="text-sm text-fg-muted truncate">{user?.email}</p>
+              <div className="flex items-center gap-1 mt-1 min-w-0">
+                <p className="text-xs text-fg-dimmed font-mono truncate">ID: {user?.id}</p>
                 {user?.id && <CopyButton text={user.id} />}
               </div>
             </div>
@@ -235,14 +236,11 @@ export function Profile() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-        <h1 className="text-2xl font-display font-bold text-fg">Profile</h1>
-        <p className="text-sm text-fg-muted mt-1">
-          {tab === 'profile' ? 'Manage your account' : 'Your agent fleet overview'}
-        </p>
-      </motion.div>
-
+    <AdminPage
+      title="Profile"
+      description={tab === 'profile' ? 'Manage your account' : 'Your agent fleet overview'}
+      width="default"
+    >
       {/* Tabs */}
       <div className="mb-6">
         <Tabs items={tabs} value={tab} onChange={setTab} />
@@ -250,6 +248,6 @@ export function Profile() {
 
       {/* Tab content */}
       {tab === 'profile' ? <ProfileTab /> : <AgentsTab />}
-    </div>
+    </AdminPage>
   );
 }

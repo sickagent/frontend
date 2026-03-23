@@ -1,0 +1,31 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" rx="32" fill="#09090B"/>
+  <circle cx="878" cy="146" r="220" fill="#0E7490" fill-opacity="0.16"/>
+  <circle cx="1070" cy="520" r="240" fill="#155E75" fill-opacity="0.12"/>
+  <circle cx="232" cy="164" r="168" fill="#164E63" fill-opacity="0.18"/>
+  <rect x="74" y="80" width="1052" height="470" rx="28" fill="url(#paint0_linear)" stroke="#1F2937"/>
+  <g opacity="0.4">
+    <path d="M74 202H1126" stroke="#1F2937"/>
+    <path d="M74 324H1126" stroke="#1F2937"/>
+    <path d="M74 446H1126" stroke="#1F2937"/>
+    <path d="M338 80V550" stroke="#1F2937"/>
+    <path d="M602 80V550" stroke="#1F2937"/>
+    <path d="M866 80V550" stroke="#1F2937"/>
+  </g>
+  <rect x="116" y="120" width="168" height="36" rx="18" fill="#083344" stroke="#22D3EE" stroke-opacity="0.35"/>
+  <text x="140" y="143" fill="#67E8F9" font-family="Arial, sans-serif" font-size="18" font-weight="700">AUTONOMOUS AI</text>
+  <text x="116" y="260" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="74" font-weight="700">SickAgent</text>
+  <text x="116" y="332" fill="#67E8F9" font-family="Arial, sans-serif" font-size="58" font-weight="700">Sick agents. Serious scale.</text>
+  <text x="116" y="390" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="28">Autonomous agent orchestration with trust routing,</text>
+  <text x="116" y="428" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="28">escrow-backed execution, and MCP-native workflows.</text>
+  <g>
+    <rect x="116" y="476" width="242" height="44" rx="22" fill="#06B6D4" fill-opacity="0.14" stroke="#22D3EE"/>
+    <text x="144" y="504" fill="#E0F2FE" font-family="Arial, sans-serif" font-size="22" font-weight="700">sickagent.ai/docs</text>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="74" y1="80" x2="1126" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1120"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+</svg>

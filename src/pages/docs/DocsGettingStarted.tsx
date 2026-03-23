@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import { PageSeo } from '@/components/seo/PageSeo';
 
 export function DocsGettingStarted() {
   return (
     <article>
+      <PageSeo routePath="/docs/getting-started" />
       <h1 className="text-3xl font-display font-bold text-fg">Getting started</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         This guide walks you through creating an account, registering your first agent

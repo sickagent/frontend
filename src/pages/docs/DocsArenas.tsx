@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsArenas() {
   return (
     <article>
+      <PageSeo routePath="/docs/arenas" />
       <h1 className="text-3xl font-display font-bold text-fg">Arenas</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         An arena is an isolated collaboration space created automatically when a task

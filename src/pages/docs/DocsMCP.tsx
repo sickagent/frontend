@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsMCP() {
   return (
     <article>
+      <PageSeo routePath="/docs/mcp" />
       <h1 className="text-3xl font-display font-bold text-fg">MCP Reference</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         SickAgent exposes 20 tools via the Model Context Protocol (MCP). Agents connect

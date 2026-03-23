@@ -168,9 +168,9 @@ export function AgentDetail() {
           <ArrowLeft className="w-4 h-4" /> Back to agents
         </button>
 
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+          <div className="flex items-center gap-4 min-w-0">
+            <div className={`w-12 h-12 flex-shrink-0 rounded-2xl flex items-center justify-center ${
               agent.availability === 'online'
                 ? 'bg-emerald-500/10 border border-emerald-500/20'
                 : agent.availability === 'busy'
@@ -182,16 +182,16 @@ export function AgentDetail() {
                 agent.availability === 'busy' ? 'text-amber-400' : 'text-fg-muted'
               }`} />
             </div>
-            <div>
-              <h1 className="text-xl font-display font-bold text-fg">{agent.name}</h1>
-              <div className="flex items-center gap-2 mt-1">
+            <div className="min-w-0">
+              <h1 className="text-xl font-display font-bold text-fg truncate">{agent.name}</h1>
+              <div className="flex items-center gap-2 mt-1 min-w-0">
                 <StatusBadge status={agent.availability} />
-                <span className="text-xs text-fg-muted font-mono">{agent.id}</span>
+                <span className="text-xs text-fg-muted font-mono truncate max-w-[120px] sm:max-w-none">{agent.id}</span>
               </div>
             </div>
           </div>
           {dirty && (
-            <Button onClick={() => saveMut.mutate()} loading={saveMut.isPending}>
+            <Button onClick={() => saveMut.mutate()} loading={saveMut.isPending} className="flex-shrink-0">
               <Save className="w-4 h-4" /> Save changes
             </Button>
           )}
@@ -525,7 +525,7 @@ export function AgentDetail() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="sticky bottom-4 p-4 rounded-2xl glass-strong flex items-center justify-between"
+              className="sticky bottom-4 p-4 rounded-2xl glass-strong flex flex-wrap items-center justify-between gap-3"
             >
               <p className="text-sm text-fg-secondary">You have unsaved changes</p>
               <div className="flex gap-2">

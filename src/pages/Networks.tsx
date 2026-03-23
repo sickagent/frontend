@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/Input';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { PageSpinner } from '@/components/ui/Spinner';
 import { IconButton } from '@/components/ui/IconButton';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { useAuth } from '@/hooks/useAuth';
 import {
   getPersonalNetwork, listExtendedNetworks, listMemberships,
@@ -233,20 +234,15 @@ export function Networks() {
   const totalNetworks = (personal ? 1 : 0) + extended.length;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-6"
-      >
-        <div>
-          <h1 className="text-2xl font-display font-bold text-fg">Networks</h1>
-          <p className="text-sm text-fg-muted mt-1">{totalNetworks} network{totalNetworks !== 1 ? 's' : ''} active</p>
-        </div>
+    <AdminPage
+      title="Networks"
+      description={`${totalNetworks} network${totalNetworks !== 1 ? 's' : ''} active`}
+      actions={
         <Button onClick={() => setCreateOpen(true)}>
           <Plus className="w-4 h-4" /> New network
         </Button>
-      </motion.div>
+      }
+    >
 
       {/* Overview stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
@@ -275,12 +271,12 @@ export function Networks() {
           </h2>
           <div className="space-y-2">
             {pendingInvites.map((m: NetworkMembership) => (
-              <Card key={m.network_id} className="px-5 py-3 flex items-center gap-4">
-                <div className="flex-1">
+              <Card key={m.network_id} className="px-5 py-3 flex flex-wrap items-center gap-3">
+                <div className="flex-1 min-w-0">
                   <p className="text-sm text-fg-secondary">Network invite</p>
-                  <p className="text-xs text-fg-muted font-mono">{m.network_id.slice(0, 12)}...</p>
+                  <p className="text-xs text-fg-muted font-mono truncate">{m.network_id.slice(0, 12)}...</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-shrink-0">
                   <Button size="sm" onClick={() => acceptMut.mutate(m.network_id)} loading={acceptMut.isPending}>
                     <Check className="w-3.5 h-3.5" /> Accept
                   </Button>
@@ -303,15 +299,15 @@ export function Networks() {
           {personal ? (
             <Card>
               <div className="p-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sick-500/10 border border-sick-500/20 flex items-center justify-center">
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-sick-500/10 border border-sick-500/20 flex items-center justify-center">
                     <Home className="w-5 h-5 text-sick-400" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-fg-secondary">Personal Network</p>
                     <p className="text-xs text-fg-muted">Your agents — no escrow, direct transfers</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
                     <Badge variant="info">{personal.members?.length || 0} members</Badge>
                     <Badge variant="success"><Shield className="w-2.5 h-2.5 mr-0.5" /> No escrow</Badge>
                   </div>
@@ -353,13 +349,13 @@ export function Networks() {
                         className="p-5 cursor-pointer"
                         onClick={() => setExpandedId(expanded ? null : net.id)}
                       >
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
                             <NetworkIcon className="w-5 h-5 text-violet-400" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-medium text-fg-secondary">{net.name || 'Unnamed network'}</p>
+                              <p className="text-sm font-medium text-fg-secondary truncate">{net.name || 'Unnamed network'}</p>
                               {isOwner && (
                                 <IconButton
                                   size="sm"
@@ -369,7 +365,7 @@ export function Networks() {
                                 </IconButton>
                               )}
                             </div>
-                            <div className="flex items-center gap-2 mt-1">
+                            <div className="flex flex-wrap items-center gap-2 mt-1">
                               <Badge variant="default"><Users className="w-3 h-3 mr-1" />{net.members?.length || 0}</Badge>
                               {isOwner && <Badge variant="purple"><Crown className="w-3 h-3 mr-1" /> Owner</Badge>}
                               <Badge variant="default"><Shield className="w-3 h-3 mr-1" /> Escrow</Badge>
@@ -378,7 +374,8 @@ export function Networks() {
                           <div className="flex items-center gap-2 flex-shrink-0">
                             {isOwner && (
                               <Button variant="secondary" size="sm" onClick={(e) => { e.stopPropagation(); setInviteOpen(net.id); }}>
-                                <UserPlus className="w-3.5 h-3.5" /> Invite
+                                <UserPlus className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Invite</span>
                               </Button>
                             )}
                             {!isOwner && (
@@ -386,7 +383,8 @@ export function Networks() {
                                 e.stopPropagation();
                                 if (confirm('Leave this network?')) leaveMut.mutate(net.id);
                               }}>
-                                <LogOut className="w-3.5 h-3.5" /> Leave
+                                <LogOut className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Leave</span>
                               </Button>
                             )}
                             {expanded ? <ChevronUp className="w-4 h-4 text-fg-muted" /> : <ChevronDown className="w-4 h-4 text-fg-muted" />}
@@ -469,6 +467,6 @@ export function Networks() {
           </div>
         </form>
       </Modal>
-    </div>
+    </AdminPage>
   );
 }

@@ -11,6 +11,7 @@ import { Badge, StatusBadge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { PageSpinner } from '@/components/ui/Spinner';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { listAdminTasks } from '@/api/tasks';
 import type { Task, TaskStatus } from '@/api/types';
 
@@ -52,11 +53,11 @@ function TaskCard({ task }: { task: Task }) {
         </div>
         <div className="flex flex-col items-end gap-2 flex-shrink-0">
           <StatusBadge status={task.status} />
-          <div className="flex items-center gap-3 text-xs text-fg-muted">
+          <div className="flex items-center gap-2 sm:gap-3 text-xs text-fg-muted">
             <span className="flex items-center gap-1">
               <Coins className="w-3 h-3" /> {task.bounty}
             </span>
-            <span className="flex items-center gap-1">
+            <span className="hidden sm:flex items-center gap-1">
               <Zap className="w-3 h-3" /> {task.execution_mode}
             </span>
             <span className="flex items-center gap-1">
@@ -97,16 +98,10 @@ export function Tasks() {
   if (isLoading) return <PageSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6"
-      >
-        <h1 className="text-2xl font-display font-bold text-fg">Tasks</h1>
-        <p className="text-sm text-fg-muted mt-1">{tasks.length} task{tasks.length !== 1 ? 's' : ''} total</p>
-      </motion.div>
-
+    <AdminPage
+      title="Tasks"
+      description={`${tasks.length} task${tasks.length !== 1 ? 's' : ''} total`}
+    >
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
@@ -119,20 +114,22 @@ export function Tasks() {
             className="w-full h-10 rounded-xl bg-surface-2 border border-border pl-10 pr-4 text-sm text-fg placeholder:text-fg-dimmed focus:outline-none focus:border-sick-500/50 transition-colors"
           />
         </div>
-        <div className="flex gap-1.5 overflow-x-auto pb-1">
-          {STATUSES.map((s) => (
-            <button
-              key={s}
-              onClick={() => setStatus(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                status === s
-                  ? 'bg-sick-500/10 text-sick-400 border border-sick-500/20'
-                  : 'text-fg-muted hover:text-fg-secondary hover:bg-surface-3 border border-transparent'
-              }`}
-            >
-              {s === 'all' ? 'All' : s.replace('_', ' ')}
-            </button>
-          ))}
+        <div className="overflow-x-auto pb-1">
+          <div className="inline-flex gap-2 rounded-2xl border border-border/50 bg-surface-1/80 p-1.5">
+            {STATUSES.map((s) => (
+              <button
+                key={s}
+                onClick={() => setStatus(s)}
+                className={`h-11 px-4 rounded-xl text-sm font-medium whitespace-nowrap transition-all border ${
+                  status === s
+                    ? 'bg-surface-0 text-sick-400 border-sick-500/20 shadow-sm'
+                    : 'text-fg-muted hover:text-fg-secondary hover:bg-surface-2 border-transparent'
+                }`}
+              >
+                {s === 'all' ? 'All' : s.replace('_', ' ')}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -157,6 +154,6 @@ export function Tasks() {
           ))}
         </div>
       )}
-    </div>
+    </AdminPage>
   );
 }

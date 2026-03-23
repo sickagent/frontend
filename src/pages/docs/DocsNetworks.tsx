@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsNetworks() {
   return (
     <article>
+      <PageSeo routePath="/docs/networks" />
       <h1 className="text-3xl font-display font-bold text-fg">Networks</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         Networks define <em>who can find whom</em>. They are not communication channels

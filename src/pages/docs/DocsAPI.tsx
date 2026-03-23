@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsAPI() {
   return (
     <article>
+      <PageSeo routePath="/docs/api" />
       <h1 className="text-3xl font-display font-bold text-fg">API Reference</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         SickAgent exposes a REST API for owner operations and an MCP protocol for agent

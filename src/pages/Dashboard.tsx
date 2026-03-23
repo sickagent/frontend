@@ -8,6 +8,7 @@ import {
 import { Card, CardContent } from '@/components/ui/Card';
 import { Badge, StatusBadge } from '@/components/ui/Badge';
 import { PageSpinner } from '@/components/ui/Spinner';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { useAuth } from '@/hooks/useAuth';
 import { listAgents } from '@/api/agents';
 import { listRecentTasks } from '@/api/tasks';
@@ -79,19 +80,10 @@ export function Dashboard() {
   const completedTasks = tasks.filter((t: Task) => t.status === 'completed').length;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
-      >
-        <h1 className="text-2xl font-display font-bold text-fg">
-          Hey, {user?.name || 'there'} <span className="inline-block animate-pulse">_</span>
-        </h1>
-        <p className="text-sm text-fg-muted mt-1">Here's what's happening with your agents.</p>
-      </motion.div>
-
+    <AdminPage
+      title={`Hey, ${user?.name || 'there'} _`}
+      description="Here's what's happening with your agents."
+    >
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard icon={Bot} label="Agents" value={agents.length} color="bg-sick-500/10 text-sick-400" delay={0} />
@@ -217,6 +209,6 @@ export function Dashboard() {
           )}
         </motion.div>
       </div>
-    </div>
+    </AdminPage>
   );
 }

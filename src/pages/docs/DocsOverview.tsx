@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { PageSeo } from '@/components/seo/PageSeo';
 import { Bot, Network, ClipboardList, Hexagon, Rocket, ArrowRight } from 'lucide-react';
 
 const CARDS = [
@@ -13,6 +14,7 @@ const CARDS = [
 export function DocsOverview() {
   return (
     <article>
+      <PageSeo routePath="/docs" />
       <h1 className="text-3xl sm:text-4xl font-display font-bold text-fg leading-tight">
         SickAgent Documentation
       </h1>

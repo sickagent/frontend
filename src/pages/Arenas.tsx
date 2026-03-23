@@ -12,6 +12,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge, StatusBadge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { PageSpinner } from '@/components/ui/Spinner';
+import { AdminPage } from '@/components/layout/AdminPage';
 import { listAdminArenas, getAdminArena, getAdminArenaMessages, getAdminArenaLedger } from '@/api/arenas';
 import type { Arena, ArenaMessage, ArenaRole, ArenaStatus, LedgerEntry, LedgerType, Task } from '@/api/types';
 
@@ -133,12 +134,10 @@ export function ArenasList() {
   if (isLoading) return <PageSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-        <h1 className="text-2xl font-display font-bold text-fg">Arenas</h1>
-        <p className="text-sm text-fg-muted mt-1">{arenas.length} arena{arenas.length !== 1 ? 's' : ''} total</p>
-      </motion.div>
-
+    <AdminPage
+      title="Arenas"
+      description={`${arenas.length} arena${arenas.length !== 1 ? 's' : ''} total`}
+    >
       {/* Stats row */}
       {arenas.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
@@ -175,20 +174,22 @@ export function ArenasList() {
             className="w-full h-10 rounded-xl bg-surface-2 border border-border pl-10 pr-4 text-sm text-fg placeholder:text-fg-dimmed focus:outline-none focus:border-sick-500/50 transition-colors"
           />
         </div>
-        <div className="flex gap-1.5 overflow-x-auto pb-1">
-          {STATUSES.map((s) => (
-            <button
-              key={s}
-              onClick={() => setStatus(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
-                status === s
-                  ? 'bg-sick-500/10 text-sick-400 border border-sick-500/20'
-                  : 'text-fg-muted hover:text-fg-secondary hover:bg-surface-3 border border-transparent'
-              }`}
-            >
-              {s}
-            </button>
-          ))}
+        <div className="overflow-x-auto pb-1">
+          <div className="inline-flex gap-2 rounded-2xl border border-border/50 bg-surface-1/80 p-1.5">
+            {STATUSES.map((s) => (
+              <button
+                key={s}
+                onClick={() => setStatus(s)}
+                className={`h-11 px-4 rounded-xl text-sm font-medium whitespace-nowrap transition-all cursor-pointer border ${
+                  status === s
+                    ? 'bg-surface-0 text-sick-400 border-sick-500/20 shadow-sm'
+                    : 'text-fg-muted hover:text-fg-secondary hover:bg-surface-2 border-transparent'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -220,8 +221,8 @@ export function ArenasList() {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <h3 className="text-sm font-semibold text-fg leading-snug">{task.title}</h3>
+                          <div className="flex flex-wrap items-start justify-between gap-x-2 gap-y-1.5 mb-2">
+                            <h3 className="text-sm font-semibold text-fg leading-snug flex-1 min-w-0">{task.title}</h3>
                             <div className="flex items-center gap-1.5 flex-shrink-0">
                               <StatusBadge status={arena.status} />
                               <ModeBadge mode={arena.execution_mode} />
@@ -279,7 +280,7 @@ export function ArenasList() {
           })}
         </div>
       )}
-    </div>
+    </AdminPage>
   );
 }
 
@@ -348,12 +349,12 @@ export function ArenaDetail() {
         <div className="relative mb-8">
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500/5 via-transparent to-sick-500/5 pointer-events-none" />
           <div className="relative p-6 rounded-3xl border border-border/60 bg-surface-1">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500/20 to-sick-500/20 border border-violet-500/20 flex items-center justify-center">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="w-11 h-11 flex-shrink-0 rounded-xl bg-gradient-to-br from-violet-500/20 to-sick-500/20 border border-violet-500/20 flex items-center justify-center">
                   <Hexagon className="w-5 h-5 text-violet-400" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h1 className="text-lg font-display font-bold text-fg">{task.title}</h1>
                   {task.description && (
                     <p className="text-sm text-fg-muted mt-0.5 line-clamp-2">{task.description}</p>

@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsConcepts() {
   return (
     <article>
+      <PageSeo routePath="/docs/concepts" />
       <h1 className="text-3xl font-display font-bold text-fg">Core concepts</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         SickAgent is built around a small set of interconnected concepts. Understanding

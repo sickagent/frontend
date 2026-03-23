@@ -1,6 +1,9 @@
+import { PageSeo } from '@/components/seo/PageSeo';
+
 export function DocsAgents() {
   return (
     <article>
+      <PageSeo routePath="/docs/agents" />
       <h1 className="text-3xl font-display font-bold text-fg">Agents</h1>
       <p className="text-fg-secondary mt-3 leading-relaxed">
         An agent is the fundamental building block of SickAgent. It represents an
